@@ -1,0 +1,27 @@
+version: "3.0"
+
+services:
+ faas-gateway:
+   build:
+     context: ./faas-gateway
+   ports:
+     - "80:80"
+   volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - ./faas-gateway:/go/src/github.com/crholm/faas/faas-gateway
+
+ factorial:
+   build:
+     context: ./factorial
+   labels:
+     - "faas.name=factorial"
+   volumes:
+     - ./factorial:/go/src/github.com/crholm/faas/factorial
+
+ md-2-html:
+   build:
+     context: ./md2html
+   labels:
+     - "faas.name=md-2-html"
+   volumes:
+     - ./md2html:/go/src/github.com/crholm/faas/md2html
